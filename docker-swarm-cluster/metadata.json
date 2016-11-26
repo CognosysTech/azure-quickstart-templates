@@ -1,7 +1,7 @@
 {
-  "itemDisplayName": "Docker Swarm",
-  "description": "This template creates a Docker swarm cluster",
-  "summary": "This template sets up a Docker Swarm cluster in a VM. The user can get the cluster id by running: docker run --rm swarm create",
-  "githubUsername": "kmouss",
-  "dateUpdated": "2015-04-20"
+  "itemDisplayName": "Docker Swarm Cluster",
+  "description": "This template creates a high-availability Docker Swarm cluster",
+  "summary": "This template deploys a Docker Swarm with 3 masters and specified number of nodes.",
+  "githubUsername": "ahmetalpbalkan",
+  "dateUpdated": "2015-07-29"
 }

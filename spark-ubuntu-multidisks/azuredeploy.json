@@ -2,36 +2,29 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "region": {
-      "type": "string",
-      "defaultValue": "West US",
-      "metadata": {
-        "Description": "Location of the resource group and all contained resources"
-      }
-    },
     "storageAccountNamePrefix": {
       "type": "string",
       "metadata": {
-        "Description": "Unique name of the new storage account that will be created to store virtual machine VHDs"
+        "description": "Unique name of the new storage account that will be created to store virtual machine VHDs"
       }
     },
     "domainName": {
       "type": "string",
       "metadata": {
-        "Description": "Domain name of the public jumpbox"
+        "description": "Domain name of the public jumpbox"
       }
     },
     "adminUsername": {
       "type": "string",
       "defaultValue": "azureuser",
       "metadata": {
-        "Description": "Virtual machine administrator username"
+        "description": "Virtual machine administrator username"
       }
     },
     "adminPassword": {
       "type": "securestring",
       "metadata": {
-        "Description": "Virtual machine administrator password"
+        "description": "Virtual machine administrator password"
       }
     },
     "tshirtSize": {
@@ -44,11 +37,14 @@
         "XLarge"
       ],
       "metadata": {
-        "Description": "T-shirt size of the Spark deployment"
+        "description": "T-shirt size of the Spark deployment"
       }
     },
     "sparkversion": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Version of Spark"
+      }
     },
     "jumpbox": {
       "type": "string",
@@ -58,14 +54,14 @@
         "Disabled"
       ],
       "metadata": {
-        "Description": "The flag allowing to enable or disable provisioning of the jumpbox VM that can be used to access the Spark environment"
+        "description": "The flag allowing to enable or disable provisioning of the jumpbox VM that can be used to access the Spark environment"
       }
     },
     "virtualNetworkName": {
       "type": "string",
       "defaultValue": "vnet",
       "metadata": {
-        "Description": "Virtual network name"
+        "description": "Virtual network name"
       }
     }
   },
@@ -82,7 +78,10 @@
         "name": "[parameters('storageAccountNamePrefix')]",
         "count": 1,
         "pool": "db",
-        "map": [0,0],
+        "map": [
+          0,
+          0
+        ],
         "jumpbox": 0
       }
     },
@@ -96,7 +95,10 @@
         "name": "[parameters('storageAccountNamePrefix')]",
         "count": 2,
         "pool": "db",
-        "map": [0,1],
+        "map": [
+          0,
+          1
+        ],
         "jumpbox": 0
       }
     },
@@ -110,7 +112,11 @@
         "name": "[parameters('storageAccountNamePrefix')]",
         "count": 2,
         "pool": "db",
-        "map": [0,1,1],
+        "map": [
+          0,
+          1,
+          1
+        ],
         "jumpbox": 0
       }
     },
@@ -124,7 +130,12 @@
         "name": "[parameters('storageAccountNamePrefix')]",
         "count": 2,
         "pool": "db",
-        "map": [0,0,1,1],
+        "map": [
+          0,
+          0,
+          1,
+          1
+        ],
         "jumpbox": 0
       }
     },
@@ -181,9 +192,6 @@
           "storageSettings": {
             "value": "[variables('tshirtSize').storage]"
           },
-          "region": {
-            "value": "[parameters('region')]"
-          },
           "networkSettings": {
             "value": "[variables('networkSettings')]"
           },
@@ -221,13 +229,12 @@
           },
           "commonSettings": {
             "value": {
-              "region": "[parameters('region')]",
               "adminUsername": "[parameters('adminUsername')]",
               "namespace": "ms"
             }
           },
           "storageSettings": {
-            "value":"[variables('tshirtSize').storage]"
+            "value": "[variables('tshirtSize').storage]"
           },
           "machineSettings": {
             "value": {
@@ -235,7 +242,7 @@
               "diskSize": "[variables('tshirtSize').diskSize]",
               "vmCount": 1,
               "availabilitySet": "[variables('availabilitySetSettings').name]",
-	      "numberOfSlavesInstances": "[variables('tshirtSize').slaveCount]"
+              "numberOfSlavesInstances": "[variables('tshirtSize').slaveCount]"
             }
           },
           "masterIpAddress": {
@@ -275,13 +282,12 @@
           },
           "commonSettings": {
             "value": {
-              "region": "[parameters('region')]",
               "adminUsername": "[parameters('adminUsername')]",
               "namespace": "sl"
             }
           },
           "storageSettings": {
-            "value":"[variables('tshirtSize').storage]"
+            "value": "[variables('tshirtSize').storage]"
           },
           "machineSettings": {
             "value": {
@@ -289,7 +295,7 @@
               "diskSize": "[variables('tshirtSize').diskSize]",
               "vmCount": "[variables('tshirtSize').slaveCount]",
               "availabilitySet": "[variables('availabilitySetSettings').name]",
-	      "numberOfSlavesInstances": "[variables('tshirtSize').slaveCount]"
+              "numberOfSlavesInstances": "[variables('tshirtSize').slaveCount]"
             }
           },
           "masterIpAddress": {
@@ -325,7 +331,6 @@
           },
           "commonSettings": {
             "value": {
-              "region": "[parameters('region')]",
               "adminUsername": "[parameters('adminUsername')]",
               "namespace": "jumpbox"
             }
